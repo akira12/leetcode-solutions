@@ -47,6 +47,8 @@
 
 package com.akira.leetcode.editor.cn;
 
+import com.akira.leetcode.editor.cn.util.PrintUtil;
+
 /**
  * @author Zhao Liang
  * 2021-07-19 23:48:08
@@ -54,6 +56,10 @@ package com.akira.leetcode.editor.cn;
 public class TwoSum {
     public static void main(String[] args) {
         Solution solution = new TwoSum().new Solution();
+
+        int[] nums = new int[] {1, 2, 3, 4, 5, 6};
+        int[] result = solution.twoSum(nums, 8);
+        PrintUtil.printArray(result);
     }
 
 //leetcode submit region begin(Prohibit modification and deletion)
