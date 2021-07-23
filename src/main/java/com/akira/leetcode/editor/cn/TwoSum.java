@@ -49,6 +49,9 @@ package com.akira.leetcode.editor.cn;
 
 import com.akira.leetcode.editor.cn.util.PrintUtil;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Zhao Liang
  * 2021-07-19 23:48:08
@@ -59,16 +62,16 @@ public class TwoSum {
 
         int[] nums = new int[] {1, 2, 3, 4, 5, 6};
         int[] result = solution.twoSum(nums, 8);
-        PrintUtil.printArray(result);
+        PrintUtil.printResult(result);
     }
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
-    public int[] twoSum(int[] nums, int target) {
+    // bubble sort alike
+    public int[] twoSum1(int[] nums, int target) {
         for (int i = 0; i < nums.length; i++) {
-            int remain = target - nums[i];
             for (int j = i + 1; j < nums.length; j++) {
-                if (nums[j] == remain) {
+                if (nums[i] + nums[j] == target) {
                     return new int[] {i, j};
                 }
             }
@@ -76,7 +79,38 @@ class Solution {
 
         return null;
     }
+
+    // 2-pass hashmap
+    public int[] twoSum2(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>(nums.length);
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i], i);
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(target - nums[i])) {
+                return new int[] {i, map.get(target - nums[i])};
+            }
+        }
+
+        return null;
+    }
+
+    // 1-pass hashmap
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>(nums.length);
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(target - nums[i])) {
+                return new int[] {map.get(target - nums[i]), i};
+            }
+
+            map.put(nums[i], i);
+        }
+
+        return null;
+    }
 }
+
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
