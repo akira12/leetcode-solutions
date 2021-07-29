@@ -47,8 +47,6 @@
 
 package com.akira.leetcode.editor.cn;
 
-import com.akira.leetcode.editor.cn.util.PrintUtil;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,14 +57,14 @@ import java.util.Map;
 public class TwoSum {
     public static void main(String[] args) {
         Solution solution = new TwoSum().new Solution();
-
-        int[] nums = new int[] {1, 2, 3, 4, 5, 6};
-        int[] result = solution.twoSum(nums, 8);
-        PrintUtil.printResult(result);
     }
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        return twoSum3(nums, target);
+    }
+
     // bubble sort alike
     public int[] twoSum1(int[] nums, int target) {
         for (int i = 0; i < nums.length; i++) {
@@ -97,7 +95,7 @@ class Solution {
     }
 
     // 1-pass hashmap
-    public int[] twoSum(int[] nums, int target) {
+    public int[] twoSum3(int[] nums, int target) {
         Map<Integer, Integer> map = new HashMap<>(nums.length);
         for (int i = 0; i < nums.length; i++) {
             if (map.containsKey(target - nums[i])) {
