@@ -50,40 +50,6 @@ package com.akira.leetcode.editor.cn;
 public class AddTwoNumbers {
     public static void main(String[] args) {
         Solution solution = new AddTwoNumbers().new Solution();
-
-        //ListNode l1 = createList(new int[] {9 ,2 ,3});
-        //ListNode l2 = createList(new int[] {1 ,2 ,3});
-        //ListNode l1 = createList(new int[] {0});
-        //ListNode l2 = createList(new int[] {0});
-        ListNode l1 = createList(new int[] {9});
-        ListNode l2 = createList(new int[] {1, 9, 9, 9});
-        ListNode result = solution.addTwoNumbers(l1, l2);
-        printResult(result);
-    }
-
-    private static ListNode createList(int[] array) {
-        ListNode headNode = new ListNode(array[0], null);
-        ListNode node = headNode;
-        for (int i = 1; i < array.length; i++) {
-            node.next = new ListNode(array[i], null);
-            node = node.next;
-        }
-        return headNode;
-    }
-
-    private static void printResult(ListNode listNode) {
-        ListNode node = listNode;
-        StringBuilder sb = new StringBuilder();
-
-        do {
-            sb.append(node.val);
-            node = node.next;
-            if (node != null) {
-                sb.append("->");
-            }
-        } while (node != null);
-
-        System.out.println(sb.toString());
     }
 
 // Definition for singly-linked list.
@@ -93,6 +59,37 @@ static class ListNode {
     ListNode() {}
     ListNode(int val) { this.val = val; }
     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+
+    /**
+     * construct a list from a array
+     * @param array
+     */
+    ListNode(int[] array) {
+        this.val = array[0];
+        this.next = null;
+
+        ListNode node = this;
+        for (int i = 1; i < array.length; i++) {
+            node.next = new ListNode(array[i], null);
+            node = node.next;
+        }
+    }
+
+    @Override
+    public String toString() {
+        ListNode node = this;
+        StringBuilder sb = new StringBuilder();
+
+        do {
+            sb.append(node.val);
+            node = node.next;
+            if (node != null) {
+                sb.append(">");
+            }
+        } while (node != null);
+
+        return sb.toString();
+    }
 }
 
 //leetcode submit region begin(Prohibit modification and deletion)
@@ -107,8 +104,12 @@ static class ListNode {
  * }
  */
 class Solution {
-    // add the nodes one by one
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        return addTwoNumbers1(l1, l2);
+    }
+
+    // add the nodes one by one
+    public ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
         ListNode result = null;
 
         ListNode curL1Node = l1;
@@ -148,7 +149,7 @@ class Solution {
     }
 
     // convert to number to add, but can not handle big number
-    public ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
+    public ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
         long num1 = convertListNodeToInt(l1);
         long num2 = convertListNodeToInt(l2);
         return convertIntToListNode(num1 + num2);
