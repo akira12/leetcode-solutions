@@ -48,7 +48,9 @@
 
 package com.akira.leetcode.editor.cn;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -63,6 +65,11 @@ public class LongestSubstringWithoutRepeatingCharacters {
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int lengthOfLongestSubstring(String s) {
+        return lengthOfLongestSubstring2(s);
+    }
+
+    // bubble sort alike
+    public int lengthOfLongestSubstring1(String s) {
         int result = 0;
 
         Set<Character> charSet = new HashSet<>();
@@ -76,6 +83,38 @@ class Solution {
             }
         }
         
+        return result;
+    }
+
+    // optimized
+    public int lengthOfLongestSubstring2(String s) {
+        int result = 0;
+
+        Map<Character, Integer> charMap = new HashMap<>();
+        int i = 0;
+        int j = 0;
+        while (i < s.length()) {
+            charMap.clear();
+            while (i + j < s.length()) {
+                if (!charMap.containsKey(s.charAt(i + j))) {
+                    charMap.put(s.charAt(i + j), i + j);
+                    result = Math.max(result, charMap.size());
+                    j++;
+                }
+                else {
+                    // i is set to the next character of the repeated character
+                    i = charMap.get(s.charAt(i + j)) + 1;
+                    j = 0;
+                    break;
+                }
+            }
+
+            // j has reached the end
+            if (i + j == s.length()) {
+                break;
+            }
+        }
+
         return result;
     }
 }
