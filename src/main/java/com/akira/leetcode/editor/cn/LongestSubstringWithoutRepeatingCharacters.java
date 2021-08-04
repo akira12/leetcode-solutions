@@ -65,7 +65,7 @@ public class LongestSubstringWithoutRepeatingCharacters {
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int lengthOfLongestSubstring(String s) {
-        return lengthOfLongestSubstring2(s);
+        return lengthOfLongestSubstring3(s);
     }
 
     // bubble sort alike
@@ -82,7 +82,7 @@ class Solution {
                 }
             }
         }
-        
+
         return result;
     }
 
@@ -100,8 +100,7 @@ class Solution {
                     charMap.put(s.charAt(i + j), i + j);
                     result = Math.max(result, charMap.size());
                     j++;
-                }
-                else {
+                } else {
                     // i is set to the next character of the repeated character
                     i = charMap.get(s.charAt(i + j)) + 1;
                     j = 0;
@@ -112,6 +111,43 @@ class Solution {
             // j has reached the end
             if (i + j == s.length()) {
                 break;
+            }
+        }
+
+        return result;
+    }
+
+    // sliding window
+    public int lengthOfLongestSubstring3(String s) {
+        int result = 0;
+
+        Map<Character, Integer> map = new HashMap<>();
+        int left = 0, right = 0;
+        while (left < s.length()) {
+            if (right == s.length()) {
+                break;
+            }
+
+            while (right < s.length()) {
+                if (!map.containsKey(s.charAt(right))) {
+                    map.put(s.charAt(right), right);
+                    result = Math.max(result, map.size());
+                    right++;
+                }
+                else {
+                    // remove skipped characters from map
+                    int next = map.get(s.charAt(right)) + 1;
+                    for (int i = left; i < next; i++) {
+                        map.remove(s.charAt(i));
+                    }
+
+                    // add current character to map
+                    map.put(s.charAt(right), right);
+
+                    left = next;
+                    right++;
+                    break;
+                }
             }
         }
 
