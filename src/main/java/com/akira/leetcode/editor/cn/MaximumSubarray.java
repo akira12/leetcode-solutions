@@ -55,6 +55,11 @@ public class MaximumSubarray {
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int maxSubArray(int[] nums) {
+        return maxSubArray2(nums);
+    }
+
+    // traverse all subarray
+    public int maxSubArray1(int[] nums) {
         int sum = 0, max = 0;
         for (int i = 0; i < nums.length; i++) {
             sum = 0;
@@ -62,6 +67,22 @@ class Solution {
                 sum += nums[i + j];
                 max = Math.max(max, sum);
             }
+        }
+
+        return max;
+    }
+
+    // dynamic programming
+    // https://leetcode.com/problems/maximum-subarray/discuss/20193/DP-solution-and-some-thoughts
+    // dp[n] = maxSubArrayMustIncludeNth(nums[1..n])
+    // a[n] = nums[n]
+    // dp[n] = dp[n-1] > 0 ? dp[n-1] : 0 + a[n]
+    public int maxSubArray2(int[] nums) {
+        int dp = 0, max = Integer.MIN_VALUE;
+
+        for (int i = 0; i < nums.length; i++) {
+            dp = Math.max(dp, 0) + nums[i];
+            max = Math.max(dp, max);
         }
 
         return max;
