@@ -56,8 +56,12 @@ public class FibonacciNumber {
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
-    // using the definition of Fibonacci sequence
     public int fib(int n) {
+        return fib3(n);
+    }
+
+    // using the definition of Fibonacci sequence
+    public int fib1(int n) {
         int a = 0, b = 1;
 
         if (n == 0) {
@@ -74,6 +78,38 @@ class Solution {
         }
 
         return Math.max(a, b);
+    }
+
+    // recursive
+    public int fib2(int n) {
+        if (n == 0) {
+            return 0;
+        }
+
+        if (n == 1) {
+            return 1;
+        }
+
+        return fib2(n - 2) + fib2(n - 1);
+    }
+
+    // recursive with memo
+    public int fib3(int n) {
+        int[] memos = new int[n + 2];
+        for (int i = 0; i < memos.length; i++) {
+            memos[i] = -1;
+        }
+
+        memos[0] = 0;
+        memos[1] = 1;
+        return fibHelper(n, memos);
+    }
+
+    public int fibHelper(int n, int[] memos) {
+        if (n >= 2 && memos[n] < 0) {
+            memos[n] = fibHelper(n - 2, memos) + fibHelper(n - 1, memos);
+        }
+        return memos[n];
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
