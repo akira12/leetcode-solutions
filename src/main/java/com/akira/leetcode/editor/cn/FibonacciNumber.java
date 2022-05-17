@@ -57,7 +57,7 @@ public class FibonacciNumber {
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int fib(int n) {
-        return fib4(n);
+        return fib3(n);
     }
 
     // using the definition of Fibonacci sequence
@@ -106,7 +106,7 @@ class Solution {
     }
 
     public int fibHelper(int n, int[] memos) {
-        if (n >= 2 && memos[n] < 0) {
+        if (memos[n] < 0) {
             memos[n] = fibHelper(n - 2, memos) + fibHelper(n - 1, memos);
         }
         return memos[n];
